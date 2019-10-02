@@ -13,11 +13,10 @@
 #endif
 
 int main(void) {
-    /* Insert DDR and PORT initializations */
-
-    /* Insert your solution below */
-    while (1) {
-
-    }
-    return 1;
+   DDRB = 0xFF;
+   PORTB = 0x00;
+   while (1) {
+      PORTB = 0x0F;
+   }
+   return 1;
 }

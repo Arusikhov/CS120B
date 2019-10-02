@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <application-state>
   <context id="">
-    <application id="google-chrome.desktop" open-window-count="2" score="13" last-seen="1569962620"/>
-    <application id="org.gnome.gedit.desktop" open-window-count="1" score="157" last-seen="1569962619"/>
+    <application id="gtkwave.desktop" open-window-count="0" score="9" last-seen="1570033154"/>
+    <application id="google-chrome.desktop" open-window-count="1" score="9855" last-seen="1570033173"/>
+    <application id="org.gnome.gedit.desktop" open-window-count="0" score="186" last-seen="1570032872"/>
+    <application id="org.gnome.Terminal.desktop" open-window-count="1" score="188" last-seen="1570033169"/>
   </context>
 </application-state>

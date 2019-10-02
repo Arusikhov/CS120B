@@ -16,4 +16,30 @@
       </metadata>
     </info>
   </bookmark>
+  <bookmark href="file:///home/csgrads/ahovh002/Lab2-introToAVR/source/main.c" added="2019-10-02T16:01:39Z" modified="2019-10-02T16:11:44Z" visited="2019-10-02T16:01:40Z">
+    <info>
+      <metadata owner="http://freedesktop.org">
+        <mime:mime-type type="text/x-csrc"/>
+        <bookmark:groups>
+          <bookmark:group>gedit</bookmark:group>
+        </bookmark:groups>
+        <bookmark:applications>
+          <bookmark:application name="gedit" exec="&apos;gedit %u&apos;" modified="2019-10-02T16:11:44Z" count="4"/>
+        </bookmark:applications>
+      </metadata>
+    </info>
+  </bookmark>
+  <bookmark href="file:///home/csgrads/ahovh002/Lab2-introToAVR/header/simAVRHeader.h" added="2019-10-02T16:13:33Z" modified="2019-10-02T16:13:33Z" visited="2019-10-02T16:13:34Z">
+    <info>
+      <metadata owner="http://freedesktop.org">
+        <mime:mime-type type="text/x-chdr"/>
+        <bookmark:groups>
+          <bookmark:group>gedit</bookmark:group>
+        </bookmark:groups>
+        <bookmark:applications>
+          <bookmark:application name="gedit" exec="&apos;gedit %u&apos;" modified="2019-10-02T16:13:33Z" count="1"/>
+        </bookmark:applications>
+      </metadata>
+    </info>
+  </bookmark>
 </xbel>
