@@ -22,9 +22,9 @@ int main(void) {
         // 1) Read input
         PAA = PINA & 0x01;
         PAB = PINA & 0x02;
-        PB  = !PAA & PAB;
+        PB  = ~PAA & PAB;
 
-        PORTB = PB0;    
+        PORTB = PB;    
     }
     return 0;
 }
