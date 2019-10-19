@@ -28,7 +28,7 @@ int main(void) {
 
         // 3) Write output
         if (cntavail == 0x00) {
-            PORTC = 0x40; //sets 7th bit to 1 if parking lot is full
+            PORTC = 0x80; //sets 7th bit to 1 if parking lot is full
         } else {
             PORTC = cntavail; //sets count of parking available to port c
         }
