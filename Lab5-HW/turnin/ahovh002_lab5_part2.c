@@ -16,8 +16,6 @@ typedef enum States {start, idle, pressA0, pressA1, reset } States;
 
 int exampleTick(int);
 
-
-
 int main(void) {
     DDRA = 0x00; PORTA = 0xFF;
     DDRC = 0xFF; PORTC = 0x00;
