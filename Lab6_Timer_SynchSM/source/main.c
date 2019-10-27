@@ -41,11 +41,40 @@ void main() {
    PORTB = 0x00;
    TimerSet(1000);
    TimerOn();
+   
    unsigned char tmpB = 0x00;
+   
+    States state = start;
+    
    while(1) {
       tmpB = ~tmpB;
       PORTB = tmpB;
       while (!TimerFlag);
+      state = LED_Blinker(state);
       TimerFlag = 0;
    }
+}
+
+typedef enum States {start, LED0, LED1, LED2} States;
+
+int LED_Blinker(int state) {
+       switch (state) { // Transitions
+        case start:
+            state = LED0;
+            break;
+        case LED0:
+            state = !TimerFlag ? tmpB = 0x01:LED1;
+            break;
+        case LED1:
+            state = !TimerFlag ? tmpB = 0x02:LED2;
+            break;
+        case LED2:
+            state = !TimerFlag ? tmpB = 0x04:LED0;
+            break;
+        default:
+            state = start;
+            break;
+    }
+    PORTC = tmpB;
+    return state;
 }
