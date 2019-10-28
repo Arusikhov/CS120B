@@ -14,20 +14,28 @@
 
 int main(void) {
     DDRA = 0x00; PORTA = 0xFF; // Configure port A's 8 pins as inputs
-    DDRB = 0xFF; PORTB = 0x00; // Configure port B's 8 pins as outputs, initialize to 0s
+    //   DDRB = 0xFF; PORTB = 0x00; // Configure port B's 8 pins as outputs, initialize to 0s
     DDRC = 0xFF; PORTC = 0x00; // Configure port B's 8 pins as outputs, initialize to 0s
-    unsigned char PA = 0x00; // Temporary variable to hold the value of A0
-
+    unsigned char PAA = 0x00; // Temporary variable to hold the value of A0
+    unsigned char PAB = 0x00;
+    unsigned char PAC = 0x00;
+    unsigned char PAD = 0x00;
     unsigned char cntavail = 0x00; //Temporary variable to hold the value of cntavail
+    unsigned char i = 0x00;
     while(1) {
+        i = 0x04;
         // 1) Read input
-        PA = PINA & 0x0F;
-        PORTC = cntavail;
-        cntavail = !(PA & 0x01) + !((PA & 0x02)>>1) + !((PA & 0x04)>>2) + !((PA & 0x08)>>3);
+        PAA = PINA & 0x01;
+	PAB = PINA & 0x02;
+        PAC = PINA & 0x04;
+        PAD = PINA & 0x08;
+        if(PAA) cntavail = i-0x01;
+	if(PAB) cntavail = cntavail-0x01;
+	if(PAC) cntavail = cntavail-0x01;
+	if(PAD) cntavail = cntavail-0x01;
            
-        
-    // 3) Write output
-    PORTB = cntavail;    
+     // 3) Write output
+    PORTC = cntavail;    
     }
     return 0;
 }

@@ -43,7 +43,7 @@ int exampleTick(int state) {
 	        } else if(A1) {
 	            state = pressA1;
 				if(counter > 0) counter--;
-            } else if(A0 & A1) {
+            } else if(A0 && A1) {
 				state = reset;	
 				counter = 0;			
 	        } else {
@@ -52,7 +52,7 @@ int exampleTick(int state) {
             break;
         case pressA0:
            // state = A0 ? pressA0: A0 & A1 ? reset: idle & counter++;
-            if(A0 & A1) {
+            if(A0 && A1) {
 	            state = reset;
 				counter = 0;
 			} else if(A0) {
@@ -63,7 +63,7 @@ int exampleTick(int state) {
             break;
         case pressA1:
            // state = A1 ? pressA1: A0 & A1 ? reset: idle & counter--;
-            if(A0 & A1) {
+            if(A0 && A1) {
 	            state = reset;
 				counter = 0;
             } else if(A1) { 
