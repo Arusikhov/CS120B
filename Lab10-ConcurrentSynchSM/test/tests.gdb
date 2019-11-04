@@ -1,4 +1,4 @@
-# Test file for Lab2-introToAVR
+# Test file for Lab10-ConcurrentSynchSM
 
 
 # commands.gdb provides the following functions for ease:
@@ -27,49 +27,18 @@ echo ======================================================\n
 echo Running all tests..."\n\n
 
 # Example test:
-test "PINA: 0x01 => PORTC: 0x03"
+test "PINA: 0x00, PINB: 0x00 => PORTC: 0"
 # Set inputs
-setPINA 0x01
+setPINA 0x00
+setPINB 0x00
 # Continue for several ticks
-continue 5
+continue 2
 # Set expect values
-expectPORTC 0x03
+expectPORTC 0
 # Check pass/fail
 checkResult
 
-# Example test:
- test "PINA: 0x03 => PORTC: 0x02"
- # Set inputs
- setPINA 0x03
- # Continue for several ticks
- continue 5
- # Set expect values
- expectPORTC 0x02
- # Check pass/fail
- checkResult
-
-# Example test:
- test "PINA: 0x07 => PORTC: 0x01"
- # Set inputs
- setPINA 0x07
- # Continue for several ticks
- continue 5
- # Set expect values
- expectPORTC 0x01
- # Check pass/fail
- checkResult
-
-# Example test:
- test "PINA: 0x0F => PORTC: 0x80"
- # Set inputs
- setPINA 0x0F
- # Continue for several ticks
- continue 5
- # Set expect values
- expectPORTC 0x80
- # Check pass/fail
- checkResult
-
+# Add tests below
 
 # Report on how many tests passed/tests ran
 set $passed=$tests-$failed
