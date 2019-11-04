@@ -130,7 +130,10 @@ int LED_Game(int state, int source) {
 		break;
 		case gameOver:
 		if(source == buttonPressed) {
-			if (score == 9)	score = 5;
+			if (score == 9)	{
+				score = 5;
+				LCD_ClearScreen();
+			}
 			LCD_Cursor(1);
 			LCD_WriteData(score+0x30);
 			TimerSet(30);
