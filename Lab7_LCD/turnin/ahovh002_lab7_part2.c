@@ -49,12 +49,16 @@ int main() {
 	PORTC = 0x00;
 	DDRA = 0x00;
 	PORTA = 0xFF;
+	DDRD = 0xFF;
+	PORTD = 0x00;
+	DDRB = 0xFF;
+	PORTB = 0x00;
 	unsigned char buttonReg = 0;
 	unsigned char button = 0;
 	States state = start;
 	
 	LCD_init();
-	
+	LCD_ClearScreen();
 	TimerSet(30);
 	TimerOn();
 	while(1) {
@@ -76,13 +80,20 @@ int LED_Game(int state, int source) {
 		case start:
 		state = PBa0;
 		dir = 0;
-		score = 0;
+		score = 5;
+		LCD_Cursor(1);
+		LCD_WriteData(score+0x30);
 		break;
 		
 		case PBa0:
 		if(source == buttonPressed) {
+			if (score > 0) {
+				score--;
+				LCD_Cursor(1);
+				LCD_WriteData(score+0x30);
+			}
 			state = gameOver;
-			}else {
+		} else {
 			state = PBa1;
 			dir = 0;
 		}
@@ -90,55 +101,63 @@ int LED_Game(int state, int source) {
 		case PBa1:
 		if(source == buttonPressed) {
 			state = gameOver;
-			if(score < 5) {
+			if(score < 9) {
 				score++;
 				LCD_Cursor(1);
-				LCD_WriteData(score+0x30);
-				} else {
-					LCD_DisplayString(1,"Victory");
-					}
-					score = 0;
-				} else if(!dir) {
+				LCD_WriteData(score+0x30);				
+				if (score == 9) {
+					LCD_DisplayString(1," Victory");
+				}
+			}
+		} else if(!dir) {
 				state = PBa2;
-				} else {
-				state = PBa0;
-			}
-			break;
-			case PBa2:
-			if(source == buttonPressed) {
-				state = gameOver;
-				} else {
-				state = PBa1;
-				dir = 1;
-			}
-			break;
-			case gameOver:
-			if(source == buttonPressed) {
-				TimerSet(30);
-				TimerOn();
-				state = PBa0;
-			}
-			break;
-			default:
-			state = start;
-			break;
+		} else {
+			state = PBa0;
 		}
-		switch (state) { // Actions
-			case start:
-			break;
-			case PBa0:
-			PORTC = 0x01;
-			break;
-			case PBa1:
-			PORTC = 0x02;
-			break;
-			case PBa2:
-			PORTC = 0x04;
-			break;
-			case gameOver:
-			break;
-			default:
-			break;
+		break;
+		case PBa2:
+		if(source == buttonPressed) {
+			if (score > 0) {
+				score--;
+				LCD_Cursor(1);
+				LCD_WriteData(score+0x30);
+			}
+			state = gameOver;
+		} else {
+			state = PBa1;
+			dir = 1;
 		}
-		return state;
+		break;
+		case gameOver:
+		if(source == buttonPressed) {
+			if (score == 9)	score = 5;
+			LCD_Cursor(1);
+			LCD_WriteData(score+0x30);
+			TimerSet(30);
+			TimerOn();
+			state = PBa0;
+		}
+		break;
+		default:
+		state = start;
+		break;
 	}
+	switch (state) { // Actions
+		case start:
+		break;
+		case PBa0:
+		PORTC = 0x01;
+		break;
+		case PBa1:
+		PORTC = 0x02;
+		break;
+		case PBa2:
+		PORTC = 0x04;
+		break;
+		case gameOver:
+		break;
+		default:
+		break;
+	}
+	return state;
+}
