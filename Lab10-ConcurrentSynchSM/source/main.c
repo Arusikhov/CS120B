@@ -47,9 +47,9 @@ void TimerSet(unsigned long M) {
     _avr_timer_M = M;
 }
 
-typedef enum ThreeLedStates {start, LED0, LED1, LED2} StatesThreeLedStates;
-typedef enum BlinkingLedStates {start, LED3, LED0} StatesBlinkingLedStates;
-typedef enum CombineLedStates {start,combine } StatesCombineLedStates;
+typedef enum ThreeLedStates {start, LED0, LED1, LED2} ThreeLedStates;
+typedef enum BlinkingLedStates { LED3, BIT0} BlinkingLedStates;
+typedef enum CombineLedStates {combine } CombineLedStates;
 
 unsigned char ThreeLEDs = 0x00; //shared output for ThreeLED state machine
 unsigned char BlinkingLED = 0x00; // shared output for BlinkingLED state machine
@@ -63,11 +63,11 @@ int ThreeLedSM(int state) {
             break;
         case LED0:
             b = 0x01;
-            state = LED1
+state = LED1;
             break;
         case LED1:
             b = 0x02;
-            state = LED2
+state = LED2;
             break;
         case LED2: 
             b = 0x04;
@@ -84,20 +84,16 @@ int ThreeLedSM(int state) {
 int BlinkingLedSM(int state) {
     unsigned char b = 0;
     switch (state) { // Transitions
-        case start:
-            b = 0x00;
-            state = LED3;
-            break;
         case LED3:
             b = 0x08;
             state = LED0;
             break;
-        case LED0:
+        case BIT0:
             b = 0x01;
             state = LED3;
             break;
         default:
-            state = start;
+            state = LED3;
             break;
     }
     BlinkingLED = b;
@@ -107,15 +103,12 @@ int BlinkingLedSM(int state) {
 int CombineLedSM(int state) {
     unsigned char b = 0;
     switch (state) { // Transitions
-        case start:
-            b = 0x00;
-            break;
         case combine:
-            b = BlinkingLed | ThreeLed;
+            b = BlinkingLED | ThreeLEDs;
             state = combine;
             break;
         default:
-            state = start;
+            state = combine;
             break;
     }
     PORTB = b;
@@ -123,16 +116,13 @@ int CombineLedSM(int state) {
 }
 
 int main(void) {
-    DDRA = 0x00; PORTA = 0xFF;  //input
     DDRB = 0xFF; PORTB = 0x00;  //output
 
     ThreeLedSM state = start;
-    BlinkingLedSM state = start;
-    CombineLedSM state = start;
 
     TimerSet(100);
     TimerOn();
-    States state = start;
+
     while (1) {
 	while (!TimerFlag);
 	state = ThreeLedSM(state);
