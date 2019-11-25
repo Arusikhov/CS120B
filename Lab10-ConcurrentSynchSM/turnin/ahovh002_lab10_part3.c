@@ -1,4 +1,3 @@
-  
 /*	Author: ahovh002
  *  Partner(s) Name: 
  *	Lab Section:
@@ -56,7 +55,6 @@ unsigned char ThreeLEDs = 0x00; //shared output for ThreeLED state machine
 unsigned char BlinkingLED = 0x00; // shared output for BlinkingLED state machine
 
 int ThreeLedSM(int tlstate, unsigned short tcount) {
-	//if (tcount == 0) {// this is for first exercise
 	if (tcount % 30 == 0) {
 		unsigned char b = 0;
 		switch (tlstate) { // Transitions
@@ -86,7 +84,6 @@ int ThreeLedSM(int tlstate, unsigned short tcount) {
 }
 
 int BlinkingLedSM(int blstate, unsigned short tcount) {
-	//if (tcount == 0) { //this is for first exercise
 	if (tcount % 100 == 0) {
 		unsigned char b = 0;
 		switch (blstate) { // Transitions
@@ -111,12 +108,11 @@ int CombineLedSM(int clstate, unsigned short tcoun) {
     unsigned char b = 0;
     switch (clstate) { // Transitions
 		case wait_100:
-			//if (tcoun == 0) {//this is for first exercise
-			if ((tcoun % 30 == 0)||(tcoun % 100 == 0)) {
+			if ((tcoun % 2 == 0) || (tcoun % 30) || (tcoun % 100)) {
 				clstate = combine;
 			}
         case combine:
-            b = BlinkingLED | ThreeLEDs;
+            b = ThreeLEDs | BlinkingLED;
             clstate = wait_100;
             break;
         default:
@@ -129,12 +125,11 @@ int CombineLedSM(int clstate, unsigned short tcoun) {
 
 int main(void) {
     DDRB = 0xFF; PORTB = 0x00;  //output
-
+	DDRA = 0x00; PORTA = 0xFF; //input
     ThreeLedStates tlstate = start;
 	BlinkingLedStates blstate = BIT3;
 	CombineLedStates clstate = wait_100;
-	unsigned char cntr = 0;
-    //TimerSet(100);
+	unsigned char cntr = 2;
 	TimerSet(1);
     TimerOn();
 
@@ -144,10 +139,9 @@ int main(void) {
 		blstate = BlinkingLedSM(blstate, cntr);
 		clstate = CombineLedSM(clstate, cntr);
 		TimerFlag = 0;
-		if ((cntr % 2) == 0) PORTB = PORTB + 16;//this is for exercise 3
-		//if (cntr < 99) cntr++;//this is for first exercise
+		if ((~PINA & 0x02)&&(cntr % 2) == 0) PORTB = PORTB + 16;//this is for exercise 3
 		if (cntr < 299) cntr++;
-		else cntr = 0;
+		else cntr = 2;
     }
     return 1;
 }
