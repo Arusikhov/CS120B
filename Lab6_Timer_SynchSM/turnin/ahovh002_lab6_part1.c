@@ -1,8 +1,6 @@
 #include<avr/io.h>
 #include<avr/interrupt.h>
 
-//#define SREGSS _SFR_MEM8(0x3F)
-
 volatile unsigned char TimerFlag = 0;
 
 unsigned long _avr_timer_cntcurr = 0;
@@ -56,23 +54,23 @@ void main() {
 int LED_Blinker(int state) {
 	switch (state) { // Transitions
 		case start:
-		state = LED0;
-		break;
+			state = LED0;
+			break;
 		case LED0:
-		tmpB = 0x01;
-		state =LED1;
-		break;
+			tmpB = 0x01;
+			state =LED1;
+			break;
 		case LED1:
-		state = LED2;
-		tmpB = 0x02;
-		break;
+			state = LED2;
+			tmpB = 0x02;
+			break;
 		case LED2:
-		state = LED0;
-		tmpB = 0x04;
-		break;
+			state = LED0;
+			tmpB = 0x04;
+			break;
 		default:
-		state = start;
-		break;
+			state = start;
+			break;
 	}
 	PORTC = tmpB;
 	return state;
